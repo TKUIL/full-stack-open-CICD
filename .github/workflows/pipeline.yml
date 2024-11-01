@@ -53,6 +53,10 @@ jobs:
       - name: Wait for frontend to be ready
         run: sleep 10
 
+      - name: Check frontend style
+        working-directory: ./bloglist-frontend
+        run: npm test
+
       - name: Run Playwright tests
         working-directory: ./playwright-tests
         run: npx playwright test
