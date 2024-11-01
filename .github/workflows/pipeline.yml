@@ -75,7 +75,7 @@ jobs:
           title: A new version of Pokedex deployed
           status: Success
           color: 0x00ff00
-          description: "Deployed to https://full-stack-open-pokedex-s7q2.onrender.com/ by ${{ github.actor }}"
+          description: "Deployed to https://full-stack-open-cicd.onrender.com/ by ${{ github.actor }}"
           webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
           username: Github Actions
 
@@ -91,13 +91,17 @@ jobs:
           username: Github Actions
 
   tag_release:
-    needs: [deployment_pipeline]
+    needs: deployment_pipeline
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Bump version and push tag
-        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
-        uses: anothrNick/github-tag-action@f278d49d30cdd8775cc3e7dd00b5ee11686ee297
+        if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
+        uses: anothrNick/github-tag-action@1.71.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: patch
+          DRY_RUN: false
+          TAG_NAME: "v1.0.0"
+          VERSION_TYPE: "patch"
