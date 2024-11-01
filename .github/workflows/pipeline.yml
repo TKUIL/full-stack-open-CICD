@@ -29,7 +29,7 @@ jobs:
         run: npm start &
 
       - name: Wait for backend to be ready
-        run: sleep 10
+        run: sleep 20
 
       - name: Test backend
         run: npm test
