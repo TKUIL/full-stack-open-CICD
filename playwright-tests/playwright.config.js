@@ -15,7 +15,7 @@ module.exports = defineConfig({
   use: {
     baseURL: 'http://localhost:4173',
     trace: 'on-first-retry',
-    timeout: 20000, 
+    timeout: 5000, 
   },
   projects: [
     {

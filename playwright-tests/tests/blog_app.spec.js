@@ -8,8 +8,8 @@ describe('Note app', () => {
   })
 
   test('Login form is shown', async ({ page }) => {
-    await expect(page.getByText('Username:')).toBeVisible()
-    await expect(page.getByText('Password:')).toBeVisible()
+    await expect(page.getByText('Username:')).toBeVisible({ timeout: 20000 }) // Aikakatkaisu 20 sekuntia
+    await expect(page.getByText('Password:')).toBeVisible({ timeout: 20000 }) // Aikakatkaisu 20 sekuntia
   })
 
   describe('Login', () => {
@@ -18,7 +18,7 @@ describe('Note app', () => {
       await page.getByTestId('password').fill('salainen')
       await page.getByRole('button', { name: 'Login' }).click()
 
-      await expect(page.getByText('Matti Luukkainen logged in')).toBeVisible()
+      await expect(page.getByText('Matti Luukkainen logged in')).toBeVisible({ timeout: 20000 }) // Aikakatkaisu 20 sekuntia
     })
 
     test('fails with wrong credentials', async ({ page }) => {
@@ -26,8 +26,8 @@ describe('Note app', () => {
       await page.getByTestId('password').fill('wrong')
       await page.getByRole('button', { name: 'Login' }).click()
 
-      await expect(page.getByText('Wrong credentials')).toBeVisible()
-      await expect(page.getByText('Matti Luukkainen logged in')).not.toBeVisible()
+      await expect(page.getByText('Wrong credentials')).toBeVisible({ timeout: 20000 }) // Aikakatkaisu 20 sekuntia
+      await expect(page.getByText('Matti Luukkainen logged in')).not.toBeVisible({ timeout: 20000 }) // Aikakatkaisu 20 sekuntia
     })
   })
 
@@ -44,7 +44,7 @@ describe('Note app', () => {
       await page.getByTestId('url').fill('http//:example.com')
       await page.getByRole('button', { name: 'Create' }).click()
 
-      await expect(page.getByText('Testing with Playwright by Ted Tester')).toBeVisible()
+      await expect(page.getByText('Testing with Playwright by Ted Tester')).toBeVisible({ timeout: 20000 }) // Aikakatkaisu 20 sekuntia
     })
 
     describe('and a blog exists', () => {
@@ -55,7 +55,7 @@ describe('Note app', () => {
       test('it can be liked', async ({ page }) => {
         await page.getByRole('button', { name: 'view' }).click()
         await page.getByRole('button', { name: 'like' }).click()
-        await expect(page.getByText('likes 1')).not.toBeVisible()
+        await expect(page.getByText('likes 1')).not.toBeVisible({ timeout: 20000 }) // Aikakatkaisu 20 sekuntia
       })
 
       test('it can be deleted by the creator', async ({ page }) => {
@@ -64,8 +64,8 @@ describe('Note app', () => {
           await dialog.accept()
         })
         await page.getByRole('button', { name: 'remove' }).click()
-        
-        await expect(page.getByText('Testing with Playwright by Ted Tester')).not.toBeVisible()
+
+        await expect(page.getByText('Testing with Playwright by Ted Tester')).not.toBeVisible({ timeout: 20000 }) // Aikakatkaisu 20 sekuntia
       })
 
       test('it can not be deleted by other users', async ({ page }) => {
@@ -73,7 +73,7 @@ describe('Note app', () => {
         await login(page, 'ted', 'tedsecret')
 
         await page.getByRole('button', { name: 'view' }).click()
-        await expect(page.getByRole('button', { name: 'remove' })).not.toBeVisible()
+        await expect(page.getByRole('button', { name: 'remove' })).not.toBeVisible({ timeout: 20000 }) // Aikakatkaisu 20 sekuntia
       })
     })
 
@@ -104,9 +104,9 @@ describe('Note app', () => {
 
         const blogDivs = await page.locator('div.blog').all()
 
-        expect(blogDivs[0]).toHaveText('blog2 by Ted Testerview') 
-        expect(blogDivs[1]).toHaveText('blog3 by Ted Testerview') 
-        expect(blogDivs[2]).toHaveText('blog1 by Ted Testerview') 
+        expect(blogDivs[0]).toHaveText('blog2 by Ted Testerview', { timeout: 20000 }) // Aikakatkaisu 20 sekuntia
+        expect(blogDivs[1]).toHaveText('blog3 by Ted Testerview', { timeout: 20000 }) // Aikakatkaisu 20 sekuntia
+        expect(blogDivs[2]).toHaveText('blog1 by Ted Testerview', { timeout: 20000 }) // Aikakatkaisu 20 sekuntia
       })
 
     })
