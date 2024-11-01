@@ -1,5 +1,5 @@
 // webpack.config.js
-import path from 'path';
+import path from 'path'
 
 export default {
   entry: './src/main.jsx', // Adjust this if your entry file is named differently
@@ -41,4 +41,4 @@ export default {
   },
 
   devtool: 'source-map',
-};
+}
