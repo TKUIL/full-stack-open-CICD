@@ -54,7 +54,7 @@ jobs:
         run: sleep 10
 
       - name: Run Playwright tests
-        working-directory: ./bloglist-frontend
+        working-directory: ./playwright-tests
         run: npx playwright test
 
       - name: Trigger deployment
