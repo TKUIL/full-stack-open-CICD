@@ -72,7 +72,7 @@ jobs:
         if: ${{ success() }}
         uses: sarisia/actions-status-discord@v1.15.0
         with:
-          title: A new version of Pokedex deployed
+          title: A new version of Bloglist deployed
           status: Success
           color: 0x00ff00
           description: "Deployed to https://full-stack-open-cicd.onrender.com/ by ${{ github.actor }}"
