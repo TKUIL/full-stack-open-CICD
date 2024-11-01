@@ -24,7 +24,7 @@ mongoose.connect(config.MONGODB_URI)
   })
 
 app.use(cors())
-app.use(express.static(path.join(__dirname, '../full-stack-open-CICD//bloglist-frontend/dist')))
+app.use(express.static(path.join(__dirname, 'bloglist-frontend', 'dist')));
 app.use(express.json())
 app.use(middleware.requestLogger)
 
@@ -38,8 +38,8 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../full-stack-open-CICD/bloglist-frontend/dist/index.html'));
-})
+  res.sendFile(path.join(__dirname, 'bloglist-frontend', 'dist', 'index.html'));
+});
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
