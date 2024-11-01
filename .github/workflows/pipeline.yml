@@ -42,20 +42,20 @@ jobs:
         working-directory: ./bloglist-frontend
         run: npm run lint
 
+      - name: Check frontend tests
+        working-directory: ./bloglist-frontend
+        run: npm test
+
       - name: Build frontend
         working-directory: ./bloglist-frontend
         run: npm run build
 
       - name: Start frontend
         working-directory: ./bloglist-frontend
-        run: npm start &
+        run: npm preview &
 
       - name: Wait for frontend to be ready
         run: sleep 10
-
-      - name: Check frontend tests
-        working-directory: ./bloglist-frontend
-        run: npm test
 
       - name: Install Playwright browsers
         run: npx playwright install
