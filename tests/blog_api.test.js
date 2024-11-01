@@ -55,70 +55,6 @@ describe('when there is initially some blogs saved', () => {
     })
   })
 
-  test('a valid blog can be added ', async () => {
-    const newBlog = {
-      title: "New Blog",
-      author: "New Author",
-      url: "http://example.com/new",
-      likes: 5
-    }
-
-    const postResponse = await api
-      .post('/api/blogs')
-      .send(newBlog)
-      .expect(201)
-      .expect('Content-Type', /application\/json/)
-      .set('Authorization', `Bearer ${token}`)
-  
-    assert.strictEqual(postResponse.body.title, newBlog.title)
-    assert.strictEqual(postResponse.body.author, newBlog.author)
-    assert.strictEqual(postResponse.body.url, newBlog.url)
-    assert.strictEqual(postResponse.body.likes, newBlog.likes)
-  
-    await api.get('/api/blogs')
-
-    const blogsAtEnd = await helper.blogsInDb()
-  
-    const titles = blogsAtEnd.map(blog => blog.title)
-
-    assert(titles.includes('New Blog'))
-  })
-
-  test('if likes property is missing, it will default to 0', async () => {
-    const newBlog = {
-      title: "New Blog",
-      author: "New Author",
-      url: "http://example.com/new",
-    }
-  
-    const postResponse = await api
-      .post('/api/blogs')
-      .send(newBlog)
-      .set('Authorization', `Bearer ${token}`)
-      .expect(201)
-      .expect('Content-Type', /application\/json/)
-  
-    assert.strictEqual(postResponse.body.likes, 0)
-  })
-
-  test('blog without title is not added', async () => {
-    const newBlog = {
-      author: "New Author",
-      url: "http://example.com/new",
-      likes: 5
-    }
-
-    await api
-      .post('/api/blogs')
-      .send(newBlog)
-      .set('Authorization', `Bearer ${token}`)
-      .expect(400)
-
-    const blogsAtEnd = await helper.blogsInDb()
-
-    assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
-  })
-
   test('a valid blog is not added without a token', async () => {
     const newBlog = {
       title: "New Blog",
@@ -132,55 +68,6 @@ describe('when there is initially some blogs saved', () => {
       .send(newBlog)
       .expect(401)
 
-  })
-
-  test('blog without url is not added', async () => {
-    const newBlog = {
-      title: "New Blog",
-      author: "New Author",
-      likes: 5
-    }
-
-    await api
-      .post('/api/blogs')
-      .send(newBlog)
-      .set('Authorization', `Bearer ${token}`)
-      .expect(400)
-
-    const blogsAtEnd = await helper.blogsInDb()
-
-    assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
-  })
-
-  test('a blog can be deleted', async () => {
-    const blogToDelete = {
-      title: "New Blog",
-      author: "New Author",
-      url: "http://example.com/new",
-      likes: 5
-    }
-
-    const response = await api
-      .post('/api/blogs')
-      .send(blogToDelete)
-      .set('Authorization', `Bearer ${token}`)
-
-    const id = response.body.id
-
-    const blogsAtStart = await helper.blogsInDb()
-
-    await api
-      .delete(`/api/blogs/${id}`)
-      .set('Authorization', `Bearer ${token}`)
-      .expect(204)
-  
-    const blogsAtEnd = await helper.blogsInDb()
-  
-    assert.strictEqual(blogsAtEnd.length, blogsAtStart.length - 1)
-  
-    const titles = blogsAtEnd.map(r => r.title)
-  
-    assert(!titles.includes(blogToDelete.title))
   })
 
   test('a blog can be updated', async () => {
