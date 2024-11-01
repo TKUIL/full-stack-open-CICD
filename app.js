@@ -24,7 +24,7 @@ mongoose.connect(config.MONGODB_URI)
   })
 
 app.use(cors())
-app.use(express.static(path.join(__dirname, '../full-stack-open-CICD/bloglist-frontend/dist')))
+app.use(express.static(path.join(__dirname, '../full-stack-open-CICD//bloglist-frontend/dist')))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
@@ -43,6 +43,9 @@ app.get('*', (req, res) => {
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
+
+console.log('Current directory:', __dirname);
+console.log('Static file directory:', path.join(__dirname, '../bloglist-frontend/dist'));
 
 
 module.exports = app
