@@ -52,7 +52,7 @@ jobs:
 
       - name: Start frontend
         working-directory: ./bloglist-frontend
-        run: npm preview &
+        run: npm run preview &
 
       - name: Wait for frontend to be ready
         run: sleep 10
