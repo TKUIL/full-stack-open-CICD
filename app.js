@@ -41,6 +41,10 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'bloglist-frontend', 'dist', 'index.html'));
 });
 
+app.get('/healthz', (_req, res) => {
+  res.status(204).send();
+});
+
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
