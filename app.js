@@ -48,8 +48,4 @@ app.get('/healthz', (_req, res) => {
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
-console.log('Current directory:', __dirname);
-console.log('Static file directory:', path.join(__dirname, '../bloglist-frontend/dist'));
-
-
 module.exports = app
