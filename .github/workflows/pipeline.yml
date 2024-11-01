@@ -11,9 +11,6 @@ on:
 jobs:
   deployment_pipeline:
     runs-on: ubuntu-20.04
-    env:
-      MONGODB_URI: ${{ secrets.MONGODB_URI }}
-      PORT: ${{ secrets.PORT }}
     steps:
       - uses: actions/checkout@v4
 
@@ -29,7 +26,7 @@ jobs:
         run: npm start &
 
       - name: Wait for backend to be ready
-        run: sleep 20
+        run: sleep 10
 
       - name: Test backend
         run: npm test
@@ -53,12 +50,12 @@ jobs:
       - name: Wait for frontend to be ready
         run: sleep 10
 
-      - name: Check frontend style
+      - name: Check frontend tests
         working-directory: ./bloglist-frontend
         run: npm test
 
       - name: Run Playwright tests
-        working-directory: ./playwright-tests
+        working-directory: ./bloglist-frontend
         run: npx playwright test
 
       - name: Trigger deployment
@@ -69,10 +66,10 @@ jobs:
         if: ${{ success() }}
         uses: sarisia/actions-status-discord@v1.15.0
         with:
-          title: A new version of Pokedex deployed
+          title: A new version of your app deployed
           status: Success
           color: 0x00ff00
-          description: "Deployed to https://full-stack-open-pokedex-s7q2.onrender.com/ by ${{ github.actor }}"
+          description: "Deployed by ${{ github.actor }}"
           webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
           username: Github Actions
 
@@ -83,7 +80,7 @@ jobs:
           title: Build failed
           status: Failure
           color: 0xff0000
-          description: "Commit [${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) broke the build"
+          description: "Commit [${{ github.sha }}] broke the build"
           webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
           username: Github Actions
 
